@@ -8,6 +8,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import projekti.bookstoreproject.domain.AppUser;
+import projekti.bookstoreproject.domain.AppUserRepository;
 import projekti.bookstoreproject.domain.Book;
 import projekti.bookstoreproject.domain.BookRepository;
 import projekti.bookstoreproject.domain.Category;
@@ -24,7 +26,7 @@ public class BookstoreprojectApplication {
 
 	@Bean
 
-	public CommandLineRunner bookDemo(BookRepository repository, CategoryRepository cRepository){
+	public CommandLineRunner bookDemo(BookRepository repository, CategoryRepository cRepository, AppUserRepository appUserRepository){
 		return (args) -> {
 
 			log.info("save a couple of books");
@@ -41,6 +43,13 @@ public class BookstoreprojectApplication {
 			
 			repository.save(new Book("A Farewell to Arms", "Ernest Hemingway", "1232323-21", 1929, 11.99, category1));
 			repository.save(new Book("Animal Farm", "George Orwell", "2212343-5", 1945, 16.99, category1));
+
+			AppUser user1 = new AppUser("user", "$2a$10$c.xM98Q/h9pOs.NUTXhZTu5YQypvL8iHagIH96W1FGbtqPKUU7lFi", "maria@maria.com", "USER");
+
+			AppUser user2 = new AppUser("admin", "$2a$10$szYlGU9VRf018ULh2fnwmeMQuCBpCK03fovtXC3zzwj2FlUPCHP8i", "matt@matt.com", "ADMIN");
+
+			appUserRepository.save(user1);
+			appUserRepository.save(user2);
 
 			log.info("fetch all books");
 			for (Book book : repository.findAll()) {

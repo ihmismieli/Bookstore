@@ -9,7 +9,10 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"></html>
 </head>
 
 <body>
-	<h1>Books</h1>
+	<div  class="container">
+		<div>
+			<h1 class="col-md-4">Books</h1>
+		</div>
 	<div class="col-md-4">
 		<h2> Hello <span sec:authentication="name"></span>!</h2>
 	</div>
@@ -25,7 +28,7 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"></html>
 			<th>ISBN</th>
 			<th>Year</th>
 			<th>Category</th>
-			<th></th>
+			<th sec:authorize="hasAuthority('ADMIN')"> </th>
 			<th></th>
 		</tr>
 		<tr th:each="book : ${books}">
@@ -34,13 +37,14 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"></html>
 			<td th:text="${book.isbn}"></td>
 			<td th:text="${book.publicationYear}"></td>
 			<td th:text="${book.category.name}"></td>
-			<td sec:authorize="hasRole('ADMIN')">
+			<td sec:authorize="hasAuthority('ADMIN')">
 				<a th:href="@{/delete/{id}(id=${book.id})}" class="btn btn-danger">Delete</a>
 			</td>
 			<td><a th:href="@{/edit/{id}(id=${book.id})}" class="btn btn-primary">Edit</a></td>
 		</tr>
 	</table>
 	<a href="/add" class="btn btn-success">Add Book</a>
+</div>
 </body>
 
 </html>
