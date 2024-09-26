@@ -16,6 +16,9 @@ import projekti.bookstoreproject.domain.CategoryRepository;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 public class BookController {
@@ -33,11 +36,18 @@ public class BookController {
         return "booklist";
     }
 
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+    
+    //REST get all the books
     @RequestMapping(value="/books", method = RequestMethod.GET)
     public @ResponseBody List<Book> bookListRest(){
         return (List<Book>) repository.findAll();
     }
 
+    //REST get by id
     @RequestMapping(value="/book/{id}", method = RequestMethod.GET)
     public @ResponseBody Optional<Book> findBookRest(@PathVariable("id") Long bookId){
         return repository.findById(bookId);
