@@ -24,6 +24,7 @@ public class WebSecurityConfig {
                 authz -> authz
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers("/api/books**").permitAll()
+                        .requestMatchers("/save").permitAll()
                         .anyRequest().authenticated())
                 .headers(headers -> headers.frameOptions(frameOptions -> frameOptions
                         .disable()))

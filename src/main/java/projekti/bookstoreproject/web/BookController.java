@@ -18,6 +18,7 @@ import projekti.bookstoreproject.domain.CategoryRepository;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Controller
 public class BookController {
@@ -61,13 +62,13 @@ public class BookController {
     }
 
     @PostMapping("/save")
-    public String save(Book book) {
+    public String save(@ModelAttribute Book book) {
         repository.save(book);
         return "redirect:booklist";
     }
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     @PreAuthorize("hasRole('ADMIN')")
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String deleteBook(@PathVariable("id") Long bookId, Model model) {
         repository.deleteById(bookId);
         return "redirect:../booklist";
